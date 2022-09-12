@@ -42,6 +42,7 @@ impl<Output> Future for Signal<Output> {
     }
 }
 
+#[derive(Clone)]
 pub struct Sender<Output> {
     cond: Arc<Mutex<Condition<Output>>>,
 }

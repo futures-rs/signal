@@ -42,9 +42,16 @@ impl<Output> Future for Signal<Output> {
     }
 }
 
-#[derive(Clone)]
 pub struct Sender<Output> {
     cond: Arc<Mutex<Condition<Output>>>,
+}
+
+impl<Output> Clone for Sender<Output> {
+    fn clone(&self) -> Self {
+        Self {
+            cond: self.cond.clone(),
+        }
+    }
 }
 
 impl<Output> Sender<Output> {

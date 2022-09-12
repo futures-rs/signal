@@ -48,7 +48,7 @@ pub struct Sender<Output> {
 }
 
 impl<Output> Sender<Output> {
-    pub fn ready(&mut self, output: Output) {
+    pub fn ready(&self, output: Output) {
         self.cond.lock().unwrap().ready(output)
     }
 }
@@ -69,7 +69,9 @@ mod tests {
 
     #[async_std::test]
     async fn test_cond() {
-        let (sig, mut sender) = cond();
+        let (sig, sender) = cond();
+
+        _ = sender.clone();
 
         async_std::task::spawn(async move {
             sender.ready(1);
